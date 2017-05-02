@@ -2,17 +2,16 @@
 session_start();
 if(isset($_SESSION['username'])){
 	$username = $_SESSION['username'];
-}
 
-$pid = '';
+} else {
+	$username = '1341231231';
+
+}
 
 if(!empty($_GET['pid']) && isset($_GET['pid'])){
 	$pid = $_GET['pid'];
 }
 
-?>
-
-<?php 
 $dbhost = "localhost";
 $dbuser = "root";
 $dbpass = "root";
@@ -24,7 +23,40 @@ if(mysqli_connect_error()) {
 		);
 }
 
+
+$pid = '';
+if(!empty($_GET['pid']) && isset($_GET['pid'])){
+	$pid = $_GET['pid'];
+
+}
+$liked = '';
+$uid = '';
+$query = "SELECT * FROM Users WHERE Uemail='$username'";
+
+$result = mysqli_query($connection, $query);
+if(!$result) {
+	$liked = 'Like';
+} else {
+	while($row = mysqli_fetch_assoc($result)) {
+		$uid = $row["uid"];
+		echo $uid;
+		echo $pid;
+		$query3 = "SELECT * FROM Likes WHERE pid = '$pid' AND uid = '$uid'";
+
+
+		$result2 = mysqli_query($connection, $query3);
+		if(!$result2) {
+			$liked = 'Like';
+		} else {
+			$liked = 'Unlike';
+		}		
+		
+	}
+	
+}
 ?>
+
+
 
 
 
@@ -54,6 +86,12 @@ if(mysqli_connect_error()) {
 <body>
 
 <?php 
+$query0 = "Select * FROM Likes WHERE pid = '$pid'";
+
+?>
+
+
+<?php 
 $query = "Select * FROM Projects WHERE pid = '$pid'";
 
 $result = mysqli_query($connection, $query);
@@ -81,7 +119,7 @@ if(!$result) {
 			<div class="form-group ">
 			<h3><label for="name" class="cols-sm-2 label">Project ID</label></h3>
 			<div class="cols-sm-10">
-			<label for="name" class="cols-sm-2 control-label"><?php
+			<label for="name" id="pid" class="cols-sm-2 control-label" value="<?php echo $row["pid"] ?>"><?php
 			echo $row["pid"] . "</label>"; ?></div></div></div>
 
 			<div class="panel-body">
@@ -105,8 +143,8 @@ if(!$result) {
 		 
 		 	<input type="hidden" name="pid" value="<?php echo $row["pid"] ?>">
 			<input type="submit" value="Donate" >
-			<input type="button" value="Like" > <hr></div></div>
-
+			<input type="button" value="<?php echo $liked ?>" > <hr></div></div>
+			</form>
 			<?php
 			
 		}
@@ -125,6 +163,8 @@ while($row = mysqli_fetch_assoc($result1)) {
 	echo $row["Ccomment"]. "<br>";
 }
 ?>
+
+<div id="name-data"></div>
 	
 <div class="container">
   <div class="row main">
@@ -135,26 +175,27 @@ while($row = mysqli_fetch_assoc($result1)) {
       </div>
     </div>
     <div class="main-login main-center"> 
-      <form class="form-horizontal" method="post" action="#">
+      
         <div class="form-group">
             <label for="name" class="cols-sm-2 control-label">Your Comment</label>
             <div class="cols-sm-10">            
-                <input type="text" class="form-control" name="name" id="name"  placeholder="Enter your comment"/>
+                <input type="text" class="form-control" name="name" id="comment-text"  placeholder="Enter your comment"/>
             </div>
         </div>
 
           
 
-            <div class="form-group ">
-              <button type="button" class="btn btn-primary btn-lg btn-block login-button">Add</button>
+            <div class="form-group">
+              <button type="button" value ="<?php echo $username ?>" id="comment" class="btn btn-primary btn-lg btn-block login-button">Add</button>
             </div>
-      </form>
+      
     </div>
   </div>
 </div>  
 
 
-
-
-
+<script src ="bt3/js/jquery-3.2.1.min.js"></script>
+<script src="bt3/js/comment.js"></script>
+</body>
+</html>
 
