@@ -45,7 +45,9 @@ if(!$result) {
 
 
 		$result2 = mysqli_query($connection, $query3);
-		if(!$result2) {
+		$row = mysqli_fetch_assoc($result2);
+		echo "hhhh".$row["uid"];
+		if(!$row["uid"]) {
 			$liked = 'Like';
 		} else {
 			$liked = 'Unlike';

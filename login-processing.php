@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 session_start();
 if(isset($_POST['username'])){
 	$username = $_POST['username'];
@@ -48,6 +50,8 @@ if(mysqli_num_rows($result) == 0) {
 	echo $username;
 	echo " Succesfully logged in";
 	header("Location: project.php");
+	 ob_end_flush();
+
 	exit;
 	} 
 
