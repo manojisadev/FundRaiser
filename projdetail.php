@@ -4,7 +4,7 @@ if(isset($_SESSION['username'])){
 	$username = $_SESSION['username'];
 
 } else {
-	$username = '1341231231';
+	$username = '';
 
 }
 
@@ -29,24 +29,24 @@ if(!empty($_GET['pid']) && isset($_GET['pid'])){
 	$pid = $_GET['pid'];
 
 }
-$liked = '';
+$liked = 'Like';
 $uid = '';
 $query = "SELECT * FROM Users WHERE Uemail='$username'";
 
 $result = mysqli_query($connection, $query);
+
 if(!$result) {
 	$liked = 'Like';
 } else {
 	while($row = mysqli_fetch_assoc($result)) {
 		$uid = $row["uid"];
-		echo $uid;
-		echo $pid;
+
 		$query3 = "SELECT * FROM Likes WHERE pid = '$pid' AND uid = '$uid'";
 
 
 		$result2 = mysqli_query($connection, $query3);
 		$row = mysqli_fetch_assoc($result2);
-		echo "hhhh".$row["uid"];
+	
 		if(!$row["uid"]) {
 			$liked = 'Like';
 		} else {
@@ -119,10 +119,10 @@ if(!$result) {
 			<div class="panel panel-primary">
 			<div class="panel-heading">
 			<div class="form-group ">
-			<h3><label for="name" class="cols-sm-2 label">Project ID</label></h3>
+			<h3><label for="name" class="cols-sm-2 label">Project Name</label></h3>
 			<div class="cols-sm-10">
 			<label for="name" id="pid" class="cols-sm-2 control-label" value="<?php echo $row["pid"] ?>"><?php
-			echo $row["pid"] . "</label>"; ?></div></div></div>
+			echo $row["Pname"] . "</label>"; ?></div></div></div>
 
 			<div class="panel-body">
 			<div class="form-group">
@@ -144,8 +144,8 @@ if(!$result) {
 			echo $row["Pmax_price"] . "</label>"; ?></div></div>
 		 
 		 	<input type="hidden" name="pid" value="<?php echo $row["pid"] ?>">
-			<input type="submit" value="Donate" >
-			<input type="button" value="<?php echo $liked ?>" > <hr></div></div>
+			<input type="submit" class="btn btn-primary" value="Donate" <?php if(!isset($_SESSION['username'])){echo "disabled";}?> >
+			<button type="button" class="btn btn-primary" id="liked-bt" value="<?php echo $liked ?>" ><span id="span-liked"><?php echo $liked ?></span></button><hr></div></div>
 			</form>
 			<?php
 			
@@ -198,6 +198,7 @@ while($row = mysqli_fetch_assoc($result1)) {
 
 <script src ="bt3/js/jquery-3.2.1.min.js"></script>
 <script src="bt3/js/comment.js"></script>
+<script src="bt3/js/like.js"></script>
 </body>
 </html>
 

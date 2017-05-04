@@ -72,10 +72,10 @@ if(!$result) {
 			<div class="panel panel-primary">
 			<div class="panel-heading">
 			<div class="form-group ">
-			<h3><label for="name" class="cols-sm-2 label">Project ID</label></h3>
+			<h3><label for="name" class="cols-sm-2 label">Project Name</label></h3>
 			<div class="cols-sm-10">
 			<label for="name" class="cols-sm-2 control-label"><?php
-			echo $row["pid"] . "</label>"; ?></div></div></div>
+			echo $row["Pname"] . "</label>"; ?></div></div></div>
 
 			<div class="panel-body">
 			<div class="form-group">

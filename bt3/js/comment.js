@@ -9,7 +9,9 @@ $("button#comment").click(function() {
 	// 	alert(data);
 	// });
 
-
+	if(comment.trim() == '') {
+		alert('Need to have some comment');
+	} else {
 	$.ajax({
 		url: 'ajax/com.php',
 		type: 'POST',
@@ -19,7 +21,9 @@ $("button#comment").click(function() {
 			alert('You need to be logged in');
 		} else {
 		$('div#name-data').text(data);
-	}
+		}
+	
 	}
 	});
+	}
 });
