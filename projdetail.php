@@ -161,7 +161,7 @@ if(!$result1) {
 } 
 
 while($row = mysqli_fetch_assoc($result1)) {
-	echo $row["Ufirst_name"]. "<br>";
+	echo $row["Uemail"]. "<br>";
 	echo $row["Ccomment"]. "<br>";
 }
 ?>

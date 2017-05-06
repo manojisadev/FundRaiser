@@ -5,6 +5,11 @@ $("button#donate-bt").on('click', function() {
 	var CNID = $( "#cnid-bt" ).val();
 	var Amount = $('#Amount').val();
 
+	// alert(pid);
+	// alert(uid);
+	// alert(CNID);
+	// alert(Amount);
+
 	$.ajax({
 		url: 'ajax/donation-processing.php',
 		type: 'POST',
@@ -13,8 +18,10 @@ $("button#donate-bt").on('click', function() {
 			if(data.trim() == 'Database query failed.'){
 				alert('Failed');
 			} else {
-				
+				location.reload();
+				alert('Successfully placed');
 			}
+
 		}
 	})
 

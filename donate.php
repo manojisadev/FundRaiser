@@ -104,7 +104,7 @@ if(!$result) {
               <button type="button" id="donate-bt" class="btn btn-primary btn-lg btn-block login-button" value="<?php echo $uid ?>">Donate!</button>
             </div>
             <div class="login-register">
-              <a href="index.php">Add a new card!</a>
+              <a href="CreditCard.php">Add a new card!</a>
             </div>
       </form>
     </div>

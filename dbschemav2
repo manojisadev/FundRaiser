@@ -1,0 +1,229 @@
+CREATE TABLE Users (
+uid INT NOT NULL,
+Ufirst_name VARCHAR(45) NOT NULL,
+Uaddress VARCHAR(45) NULL,
+Uemail VARCHAR(45) NOT NULL UNIQUE,
+Ulast_name VARCHAR(45) NOT NULL,
+Upassword VARCHAR(45) NOT NULL,
+Uphone INT(10) NULL,
+Ujoin_date DATETIME NOT NULL,
+PRIMARY KEY (uid)
+);
+
+INSERT INTO Users (uid,Ufirst_name,Ulast_name,Uaddress,Uemail,Upassword,Uphone,Ujoin_date) VALUES (1,'Adam','Jack','Queens','adam@jack.com','badpassword','1111111111',NOW());
+INSERT INTO Users (uid,Ufirst_name,Ulast_name,Uaddress,Uemail,Upassword,Uphone,Ujoin_date) VALUES (2,'Rock','Dwayne','Brooklyn','rock@dwayne.com','badpassword','222222222',NOW()-10);
+INSERT INTO Users (uid,Ufirst_name,Ulast_name,Uaddress,Uemail,Upassword,Uphone,Ujoin_date) VALUES (3,'Ricky','Morty','Bronx','ricky@morty.com','badpassword','333333333',NOW()-20);
+INSERT INTO Users (uid,Ufirst_name,Ulast_name,Uaddress,Uemail,Upassword,Uphone,Ujoin_date) VALUES (4,'Hugo','Boss','DC','hugo@boss.com','badpassword','444444444',NOW()-30);
+INSERT INTO Users (uid,Ufirst_name,Ulast_name,Uaddress,Uemail,Upassword,Uphone,Ujoin_date) VALUES (5,'Raj','Kath','Cali','raj@kath.com','badpassword','555555555',NOW()-40);
+
+
+INSERT INTO Users (uid,Ufirst_name,Ulast_name,Uaddress,Uemail,Upassword,Uphone,Ujoin_date) VALUES (6,'BobInBrooklyn','Yo','Brooklyn','bobinbrooklyn@yo.com','badpassword','555555555',NOW());
+
+
+
+
+CREATE TABLE Projects (
+pid INT NOT NULL,
+uid INT NOT NULL,
+cid INT NOT NULL,
+Pname VARCHAR(100) NOT NULL UNIQUE,
+Pdescription VARCHAR(100) NOT NULL,
+Pstart_date DATETIME NOT NULL,
+Plast_date DATETIME NOT NULL,
+Plast_login DATETIME NULL,
+Pproj_date DATETIME NOT NULL,
+Pmin_price INT NOT NULL,
+Pmax_price INT NOT NULL,
+Pstatus INT NOT NULL,
+PRIMARY KEY (pid),
+FOREIGN KEY (uid) REFERENCES Users(uid),
+FOREIGN KEY (cid) REFERENCES Categories(cid)
+);
+
+INSERT INTO Projects (pid,uid,cid,Pname,Pdescription,Pstart_date,Plast_date,Pproj_date,Pmin_price,Pmax_price,Pstatus) VALUES (11,1,111,'Rocket Fuel','Rocket Fuel For SpaceX',NOW(),NOW()+50,NOW()+100,10,500,0);
+INSERT INTO Projects (pid,uid,cid,Pname,Pdescription,Pstart_date,Plast_date,Pproj_date,Pmin_price,Pmax_price,Pstatus) VALUES (22,2,222,'Pizza Finder','Pizza Finder For NYC',NOW(),NOW()+60,NOW()+200,20,1000,-1);
+INSERT INTO Projects (pid,uid,cid,Pname,Pdescription,Pstart_date,Plast_date,Pproj_date,Pmin_price,Pmax_price,Pstatus) VALUES (33,3,333,'Money Saver','Money Saver For College',NOW(),NOW()+70,NOW()+300,30,1500,0);
+INSERT INTO Projects (pid,uid,cid,Pname,Pdescription,Pstart_date,Plast_date,Pproj_date,Pmin_price,Pmax_price,Pstatus) VALUES (44,4,444,'Light jeans','Light jeans For Men',NOW(),NOW()+80,NOW()+300,40,2000,1);
+INSERT INTO Projects (pid,uid,cid,Pname,Pdescription,Pstart_date,Plast_date,Pproj_date,Pmin_price,Pmax_price,Pstatus) VALUES (55,5,555,'Light Sabre','Light Sabre For Yolo',NOW(),NOW()+90,NOW()+300,50,2500,0);
+
+INSERT INTO Projects (pid,uid,cid,Pname,Pdescription,Pstart_date,Plast_date,Pproj_date,Pmin_price,Pmax_price,Pstatus) VALUES (66,4,666,'Jazz Music','Jazz Music For Grownups',NOW(),NOW()+80,NOW()+200,40,2000,0);
+INSERT INTO Projects (pid,uid,cid,Pname,Pdescription,Pstart_date,Plast_date,Pproj_date,Pmin_price,Pmax_price,Pstatus) VALUES (77,5,666,'Jazz Vibes','Jazz Vibes For Hippies',NOW(),NOW()+90,NOW()+300,50,2500,0);
+
+INSERT INTO Projects (pid,uid,cid,Pname,Pdescription,Pstart_date,Plast_date,Pproj_date,Pmin_price,Pmax_price,Pstatus) VALUES (88,5,666,'Jazz Album','Jazz Album From The 80s',NOW(),NOW()+90,NOW()+300,50,2500,0);
+
+INSERT INTO Projects (pid,uid,cid,Pname,Pdescription,Pstart_date,Plast_date,Pproj_date,Pmin_price,Pmax_price,Pstatus) VALUES (99,4,666,'Jazz Doll','Jazz Doll For The 70s',NOW(),NOW()+90,NOW()+400,500,25000,0);
+
+INSERT INTO Projects (pid,uid,cid,Pname,Pdescription,Pstart_date,Plast_date,Pproj_date,Pmin_price,Pmax_price,Pstatus) VALUES (90,4,222,'Burger','Burger From McDs',NOW(),NOW()+90,NOW()+400,500,25000,0);
+
+
+//
+
+
+UPDATE Projects SET Pstatus = 3 WHERE uid = 4;
+
+
+
+CREATE TABLE Team_Members (
+uid INT NOT NULL,
+pid INT NOT NULL,
+PRIMARY KEY (uid,pid),
+FOREIGN KEY (uid) REFERENCES Users(uid),
+FOREIGN KEY (pid) REFERENCES Projects(pid)
+);
+
+
+
+INSERT INTO Team_Members (uid,pid) VALUES (1,11);
+INSERT INTO Team_Members (uid,pid) VALUES (2,22);
+INSERT INTO Team_Members (uid,pid) VALUES (3,33);
+INSERT INTO Team_Members (uid,pid) VALUES (4,44);
+INSERT INTO Team_Members (uid,pid) VALUES (5,55);
+
+
+
+CREATE TABLE Donors(
+uid INT NOT NULL,
+pid INT NOT NULL,
+Dmoney INT NOT NULL,
+Dpledged_time DATETIME NOT NULL,
+Dcharged_time DATETIME NULL,
+Dstatus INT NOT NULL,
+CNID INT NOT NULL,
+PRIMARY KEY (uid,pid,Dpledged_time),
+FOREIGN KEY (uid,CNID) REFERENCES CreditCard(uid,CNID),
+FOREIGN KEY (pid) REFERENCES Projects(pid)
+
+);
+
+INSERT INTO Donors (uid,pid,Dmoney,Dpledged_time,Dcharged_time,Dstatus,CNID) VALUES (1,11,1000,NOW()+100,NULL,0,1);
+INSERT INTO Donors (uid,pid,Dmoney,Dpledged_time,Dcharged_time,Dstatus,CNID) VALUES (2,22,2000,NOW()+20,NOW()+300,0,2);
+INSERT INTO Donors (uid,pid,Dmoney,Dpledged_time,Dcharged_time,Dstatus,CNID) VALUES (3,33,3000,NOW()+100,NOW()+2000,0,3);
+INSERT INTO Donors (uid,pid,Dmoney,Dpledged_time,Dcharged_time,Dstatus,CNID) VALUES (4,44,4000,NOW()+100,NULL,0,4);
+INSERT INTO Donors (uid,pid,Dmoney,Dpledged_time,Dcharged_time,Dstatus,CNID) VALUES (5,55,5000,NOW()+100,NOW()+2000,0,5);
+
+
+
+CREATE TABLE Categories(
+cid INT NOT NULL,
+CAcname VARCHAR(45) NOT NULL,
+PRIMARY KEY (cid)
+);
+
+INSERT INTO Categories (cid,CAcname) VALUES (111,'Space');
+INSERT INTO Categories (cid,CAcname) VALUES (222,'Food');
+INSERT INTO Categories (cid,CAcname) VALUES (333,'Finance');
+INSERT INTO Categories (cid,CAcname) VALUES (444,'Clothing');
+INSERT INTO Categories (cid,CAcname) VALUES (555,'Weapons');
+
+INSERT INTO Categories (cid,CAcname) VALUES (666,'Jazz');
+
+
+
+CREATE TABLE Likes (
+pid INT NOT NULL,
+uid INT NOT NULL,
+Lliked_time DATETIME NOT NULL,
+PRIMARY KEY (pid,uid),
+FOREIGN KEY (uid) REFERENCES Users(uid),
+FOREIGN KEY (pid) REFERENCES Projects(pid)
+);
+
+INSERT INTO Likes (pid,uid,Lliked_time) VALUES (11,1,NOW()+3000);
+INSERT INTO Likes (pid,uid,Lliked_time) VALUES (22,2,NOW()+3000);
+INSERT INTO Likes (pid,uid,Lliked_time) VALUES (33,3,NOW()+3000);
+INSERT INTO Likes (pid,uid,Lliked_time) VALUES (44,4,NOW()+3000);
+INSERT INTO Likes (pid,uid,Lliked_time) VALUES (55,5,NOW()+3000);
+
+
+CREATE TABLE Resources (
+pid INT NOT NULL,
+uid INT NOT NULL,
+Rupload_time DATETIME NOT NULL,
+Rcontent BLOB NOT NULL,
+Rdescription VARCHAR(45) NOT NULL,
+Rflag INT NOT NULL,
+PRIMARY KEY (pid,uid,Rupload_time),
+FOREIGN KEY (uid) REFERENCES Users(uid),
+FOREIGN KEY (pid) REFERENCES Projects(pid)
+);
+
+
+INSERT INTO Resources (pid,uid,Rupload_time,Rcontent,Rdescription,Rflag) VALUES (11,1,NOW()+3000,'0x89504E470D0A1A0A0000000D4948445200000010000000100802000000‌​90916836000000017352‌​474200AECE1CE9000000‌​0467414D410000B18F0B‌​FC610500000009704859‌​7300000EC300000EC301‌​C76FA8640000001E4944‌​4154384F6350DAE84312‌​6220493550F1A8066242‌​6C349406472801006AC9‌​1F1040F796BD00000000‌​49454E44AE426082','Rocket Fuel Image',1);
+INSERT INTO Resources (pid,uid,Rupload_time,Rcontent,Rdescription,Rflag) VALUES (22,2,NOW()+3000,'0x89504E470D0A1A0A0000000D4948445200000010000000100802000000‌​90916836000000017352‌​474200AECE1CE9000000‌​0467414D410000B18F0B‌​FC610500000009704859‌​7300000EC300000EC301‌​C76FA8640000001E4944‌​4154384F6350DAE84312‌​6220493550F1A8066242‌​6C349406472801006AC9‌​1F1040F796BD00000000‌​49454E44AE426082','Pizza Shop Image',1);
+INSERT INTO Resources (pid,uid,Rupload_time,Rcontent,Rdescription,Rflag) VALUES (33,3,NOW()+3000,'0x89504E470D0A1A0A0000000D4948445200000010000000100802000000‌​90916836000000017352‌​474200AECE1CE9000000‌​0467414D410000B18F0B‌​FC610500000009704859‌​7300000EC300000EC301‌​C76FA8640000001E4944‌​4154384F6350DAE84312‌​6220493550F1A8066242‌​6C349406472801006AC9‌​1F1040F796BD00000000‌​49454E44AE426082','Cash Money',1);
+INSERT INTO Resources (pid,uid,Rupload_time,Rcontent,Rdescription,Rflag) VALUES (44,4,NOW()+3000,'0x89504E470D0A1A0A0000000D4948445200000010000000100802000000‌​90916836000000017352‌​474200AECE1CE9000000‌​0467414D410000B18F0B‌​FC610500000009704859‌​7300000EC300000EC301‌​C76FA8640000001E4944‌​4154384F6350DAE84312‌​6220493550F1A8066242‌​6C349406472801006AC9‌​1F1040F796BD00000000‌​49454E44AE426082','Jeans Image',1);
+INSERT INTO Resources (pid,uid,Rupload_time,Rcontent,Rdescription,Rflag) VALUES (55,5,NOW()+3000,'0x89504E470D0A1A0A0000000D4948445200000010000000100802000000‌​90916836000000017352‌​474200AECE1CE9000000‌​0467414D410000B18F0B‌​FC610500000009704859‌​7300000EC300000EC301‌​C76FA8640000001E4944‌​4154384F6350DAE84312‌​6220493550F1A8066242‌​6C349406472801006AC9‌​1F1040F796BD00000000‌​49454E44AE426082','Sword iMage',1);
+
+
+
+
+
+
+CREATE TABLE Comments (
+pid INT NOT NULL,
+uid INT NOT NULL,
+Ccomment VARCHAR(255) NOT NULL,
+Ccomment_time DATETIME NOT NULL,
+PRIMARY KEY (pid,uid,Ccomment_time),
+FOREIGN KEY (uid) REFERENCES Users(uid),
+FOREIGN KEY (pid) REFERENCES Projects(pid)
+);
+
+INSERT INTO Comments (pid,uid,Ccomment,Ccomment_time) VALUES(11,1,'Wow',NOW()+1000);
+INSERT INTO Comments (pid,uid,Ccomment,Ccomment_time) VALUES(22,2,'Great',NOW()+1000);
+INSERT INTO Comments (pid,uid,Ccomment,Ccomment_time) VALUES(33,3,'Bad',NOW()+1000);
+INSERT INTO Comments (pid,uid,Ccomment,Ccomment_time) VALUES(44,4,'Terrible',NOW()+1000);
+INSERT INTO Comments (pid,uid,Ccomment,Ccomment_time) VALUES(55,5,'Amazing',NOW()+1000);
+
+CREATE TABLE Follows (
+uid INT NOT NULL,
+fid INT NOT NULL,
+PRIMARY KEY (uid,fid),
+FOREIGN KEY (uid) REFERENCES Users(uid),
+FOREIGN KEY (fid) REFERENCES Users(uid)
+);
+
+INSERT INTO Follows (uid,fid) VALUES(1,2);
+INSERT INTO Follows (uid,fid) VALUES(2,3);
+INSERT INTO Follows (uid,fid) VALUES(3,4);
+INSERT INTO Follows (uid,fid) VALUES(4,5);
+INSERT INTO Follows (uid,fid) VALUES(5,1);
+
+INSERT INTO Follows (uid,fid) VALUES(6,1);
+INSERT INTO Follows (uid,fid) VALUES(6,2);
+INSERT INTO Follows (uid,fid) VALUES(6,3);
+INSERT INTO Follows (uid,fid) VALUES(6,4);
+
+CREATE TABLE Ratings (
+uid INT NOT NULL,
+pid INT NOT NULL,
+Rrating INT NOT NULL,
+PRIMARY KEY (uid,pid,Rrating),
+FOREIGN KEY (uid,pid) REFERENCES Donors(uid,pid)
+);
+
+//INSERT INTO Ratings (uid,pid,Rrating) VALUES(1,44,5);
+//INSERT INTO Ratings (uid,pid,Rrating) VALUES(2,55,5);
+//INSERT INTO Ratings (uid,pid,Rrating) VALUES(3,44,5);
+
+
+INSERT INTO Ratings (uid,pid,Rrating) VALUES(4,44,5);
+INSERT INTO Ratings (uid,pid,Rrating) VALUES(5,55,5);
+
+CREATE TABLE CreditCard (
+uid INT NOT NULL,
+CNID INT NOT NULL,
+CreditNumber BIGINT(16) NOT NULL,
+CVVNumber INT(3) NOT NULL,
+ExpirationDate DATE NOT NULL,
+OwnerName VARCHAR(45) NOT NULL,
+PRIMARY KEY (uid, CNID),
+FOREIGN KEY (uid) REFERENCES Users(uid)
+);
+
+INSERT INTO CreditCard (uid,CNID,CreditNumber,CVVNumber,ExpirationDate,OwnerName) VALUES (1,1,12345,321,NOW(),'Adam');
+INSERT INTO CreditCard (uid,CNID,CreditNumber,CVVNumber,ExpirationDate,OwnerName) VALUES (2,2,1234,321,NOW(),'Drey');
+INSERT INTO CreditCard (uid,CNID,CreditNumber,CVVNumber,ExpirationDate,OwnerName) VALUES (3,3,123,321,NOW(),'George');
+INSERT INTO CreditCard (uid,CNID,CreditNumber,CVVNumber,ExpirationDate,OwnerName) VALUES (4,4,12,321,NOW(),'Raul');
+INSERT INTO CreditCard (uid,CNID,CreditNumber,CVVNumber,ExpirationDate,OwnerName) VALUES (5,5,1,321,NOW(),'Kabali');
+

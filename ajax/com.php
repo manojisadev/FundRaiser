@@ -40,7 +40,7 @@ while($row = mysqli_fetch_assoc($result)) {
 $query1 = "INSERT INTO Comments (pid,uid,Ccomment,Ccomment_time) VALUES('$pid','$uid','$comment',now())";
 $result1 = mysqli_query($connection, $query1);
 if(!$result1) {
-	echo('');
+	echo(mysqli_error($connection));
 } else {
 	echo $username;
 	echo $comment;

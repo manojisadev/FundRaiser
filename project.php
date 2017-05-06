@@ -38,7 +38,7 @@ if(mysqli_connect_error()) {
     <ul class="nav navbar-nav">
       <li class="active"><a href="index.php">Home</a></li>
       <li><a href="login.php">Login</a></li>
-      <li><a href="#">Page 2</a></li>
+      <li><a href="createproj.php">New Project</a></li>
       <li><a href="#">Page 3</a></li>
     </ul>
   </div>

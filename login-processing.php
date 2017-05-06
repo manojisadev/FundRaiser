@@ -16,7 +16,7 @@ if(isset($_POST['username'])){
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 } else {
-	redirect_to("login.php");
+	header("Location: login.php");
 } ?>
 
 <?php 
