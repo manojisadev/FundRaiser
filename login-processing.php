@@ -5,6 +5,8 @@ session_start();
 if(isset($_POST['username'])){
 	$username = $_POST['username'];
 	$_SESSION['username'] = $username;
+	$expire = time() + (60*60*2);
+	setcookie("username",$username,$expire);
 }
 ?>
 
