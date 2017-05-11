@@ -5,10 +5,11 @@ $("button#donate-bt").on('click', function() {
 	var CNID = $( "#cnid-bt" ).val();
 	var Amount = $('#Amount').val();
 
-	// alert(pid);
-	// alert(uid);
-	// alert(CNID);
-	// alert(Amount);
+	 alert(pid);
+	 alert('hi');
+	 alert(uid);
+	 alert(CNID);
+	 alert(Amount);
 
 	$.ajax({
 		url: 'ajax/donation-processing.php',
@@ -19,7 +20,7 @@ $("button#donate-bt").on('click', function() {
 				alert('Failed');
 			} else {
 				location.reload();
-				alert('Successfully placed');
+				alert('Successfully placed 11');
 			}
 
 		}

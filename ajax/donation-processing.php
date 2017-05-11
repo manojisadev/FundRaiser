@@ -17,14 +17,14 @@ if(mysqli_connect_error()) {
 
 if(isset($_POST['pid']) && isset($_POST['CNID']) && isset($_POST['uid']) && isset($_POST['Amount'])){
 
-	$uid = mysqli_real_escape_string($connection, $_POST['uid']);
-	//$uid = $_POST['uid'];
-	$CNID = mysqli_real_escape_string($connection, $_POST['CNID']);
-	//$CNID = $_POST['CNID'];
-	$pid = mysqli_real_escape_string($connection, $_POST['pid']);
-	//$pid = $_POST['pid'];
-	$Amount = mysqli_real_escape_string($connection, $_POST['Amount']);
-	//$Amount = intval($_POST['Amount']);
+	//$uid = mysqli_real_escape_string($connection, $_POST['uid']);
+	$uid = $_POST['uid'];
+	//$uid = mysqli_real_escape_string($connection, $_POST['uid']);
+	$CNID = $_POST['CNID'];
+	//$uid = mysqli_real_escape_string($connection, $_POST['uid']);
+	$pid = $_POST['pid'];
+	//$uid = mysqli_real_escape_string($connection, $_POST['uid']);
+	$Amount = intval($_POST['Amount']);
 	$status = '0';
 }
 
