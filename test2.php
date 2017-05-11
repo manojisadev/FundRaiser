@@ -1,83 +1,122 @@
-<?php 
-$dbhost = "localhost";
-$dbuser = "root";
-$dbpass = "root";
-$dbname = "midterm";
-$connection = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+<!DOCTYPE html>
 
-if(mysqli_connect_error()) {
-	die("Database connection failed" . mysqli_connect_error() . "(" . mysqli_connect_errno().")"
-		);
-} else {
-  echo "connected";
-}
-
-?>
-<html>
 <head>
-	<link rel="stylesheet" href="bt3/css/bootstrap.css">
+<title></title>
 </head>
-<title>Index</title>
+
 <body>
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="index.php"><i class="glyphicon glyphicon-home"> </i> FundRaiser</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="index.php">Home</a></li>
-      <li><a href="login.php">Login</a></li>
-      <li><a href="#">Page 2</a></li>
-      <li><a href="#">Page 3</a></li>
-    </ul>
-  </div>
-</nav>
 
+<form action="" method='post' enctype="multipart/form-data">
+Description of Video: <input type="text" name="description_entered"/><br><br>
+<input type="file" name="file"/><br><br>
+  
+<input type="submit" name="submit" value="Upload"/>
 
-
-
-
-
-
-
-<form action="test2.php" method="post" enctype="multipart/form-data">
-File : <input type="file" name="image" value=""> <br>
-name : <input type="text" name="keyword" value=""> <br>
-<input type="submit" name="submit" value="submit">
 </form>
-<?php 
+<?php
+error_reporting(E_ERROR | E_PARSE); 
+$pid=$_GET['pid'];
+$uid=$_GET['uid'];
+$name= $_FILES['file']['name'];
+$tmp_name= $_FILES['file']['tmp_name'];
+$submitbutton= $_POST['submit'];
+$position= strpos($name, "."); 
+$fileextension= substr($name, $position + 1);
+$fileextension= strtolower($fileextension);
+$description= $_POST['description_entered'];
 
-$file = $_FILES['image']['tmp_name'];
+$success= -1;
 
-if(!isset($file)) {
-  echo "Please select an image!";
-} else {
-$image = file_get_contents($_FILES['image']['tmp_name']);
-$image_name = $_FILES['image']['name'];
+$descript= 0;
 
+if (empty($description))
+{
+$description='new resource';  
+$descript= 1;
+}
 
-if(getimagesize($_FILES['image']['tmp_name']) == FALSE) {
-  echo "Please enter a correct image";
-} 
+if (isset($name)) {
 
-else {
-echo "enter here";
-$query = "INSERT INTO test1 (content) VALUES ('$image'); ";
-$result1 = mysqli_query($connection,$query);
-echo "exited here";
-if(!$result1)
-  echo "error";
-else {
-  echo "Uploaded";
+$path= 'Uploads/videos/';
+
+if (!empty($name)){
+if (($fileextension !== "mp4") && ($fileextension !== "ogg") && ($fileextension !== "webm"))
+{
+$success=0;
+echo "The file extension must be .mp4, .ogg, or .webm in order to be uploaded";
+}
+
+else if (($fileextension == "mp4") || ($fileextension == "ogg") || ($fileextension == "webm"))
+{
+$success=1;
+if (move_uploaded_file($tmp_name, $path.$name)) {
+echo 'Uploaded!';
+}
 }
 }
 }
 ?>
 
+<?php
 
-<script src ="bt3/js/jquery-3.2.1.min.js"></script>
-<script src ="bt3/js/bootstrap.js"></script>
+$user = "root"; 
+$password = "root"; 
+$host = "localhost"; 
+$dbase = "dbpro1"; 
+$table = "Resources"; 
 
+$connection= mysqli_connect ($host, $user, $password,$dbase);
+if(mysqli_connect_error()) {
+  die("Database connection failed" . mysqli_connect_error() . "(" . mysqli_connect_errno().")"
+    );
+}
+$flag=1;
+
+if((!empty($description)) && ($success == 1)){
+mysqli_query($connection,"INSERT INTO $table (pid,uid,Rupload_time,Rdescription, Rcontent, Rflag,extension)
+VALUES ($pid,$uid,now(),'$description', '$name', $flag,'$fileextension')") or die(mysqli_error($connection));
+}
+
+mysqli_close($connection);
+
+?>
+<p id="para6">Videos</p>
+
+<?php
+$user = "root"; 
+$password = "root"; 
+$host = "localhost"; 
+$dbase = "dbpro1"; 
+$table = "Resources"; 
+
+// Connection to DBase 
+$connection=mysqli_connect($host,$user,$password,$dbase); 
+if(mysqli_connect_error()) {
+  die("Database connection failed" . mysqli_connect_error() . "(" . mysqli_connect_errno().")"
+    );
+}
+$result= mysqli_query($connection, "SELECT * FROM $table ORDER BY Rupload_time DESC" ) ;
+ 
+
+print "<table border=1>\n"; 
+while ($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){ 
+$videos_field= $row['Rcontent'];
+$video_show= "Uploads/videos/$videos_field";
+$descriptionvalue= $row['Rdescription'];
+$fileextensionvalue= $row['extension'];
+print "<tr>\n"; 
+print "\t<td>\n"; 
+echo "<font face=arial size=4/>$descriptionvalue</font>";
+print "</td>\n";
+print "\t<td>\n"; 
+echo "<div align=center><video width='320' controls><source src='$video_show' type='video/$fileextensionvalue'>Your browser does
+not support the video tag.</video></div>";
+print "</td>\n";
+print "</tr>\n"; 
+} 
+print "</table>\n";  
+print "<a href='projdetail.php?pid=$pid'>Go back to Project Details</a>";
+
+?> 
 </body>
-
 </html>

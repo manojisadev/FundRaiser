@@ -104,6 +104,7 @@ if(!$result) {
 		<form class="form-horizontal text-center" method="post" action="donate.php">	
 		<?php
 		while($row = mysqli_fetch_assoc($result)) {
+			$cpuid=$row["uid"];
 		?>
 			
 			<div class="panel panel-primary">
@@ -132,9 +133,12 @@ if(!$result) {
 			<div class="cols-sm-10">
 			<label for="name" class="cols-sm-2 control-label"><?php
 			echo $row["Pmax_price"] . "</label>"; ?></div></div>
+			<input type="hidden" id='up' name="uid" value="<?php echo $uid ?>">
+		 	<input type="hidden" id='cp' name="pid" value="<?php echo $row["pid"] ?>">
 		 
 		 	<input type="hidden" name="pid" value="<?php echo $row["pid"] ?>">
 			<input type="submit" class="btn btn-primary" value="Donate" <?php if(!isset($_SESSION['username'])){echo "disabled";}?> >
+			<?php if($uid==$cpuid) echo '<input type="button" id="resadd" class="btn btn-primary" value="Add Resources" >'; ?>
 			<button type="button" class="btn btn-primary" id="liked-bt" value="<?php echo $liked ?>" ><span id="span-liked"><?php echo $liked ?></span></button><hr></div></div>
 			</form>
 			<?php
@@ -223,6 +227,7 @@ while($row = mysqli_fetch_assoc($result1)) {
 <script src ="bt3/js/jquery-3.2.1.min.js"></script>
 <script src="bt3/js/comment.js"></script>
 <script src="bt3/js/like.js"></script>
+<script src="bt3/js/resource.js"></script>
 </body>
 </html>
 

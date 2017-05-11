@@ -1,0 +1,70 @@
+drop procedure Update_Campaign
+DELIMITER $$
+create procedure Update_Campaign(
+   in ppid int,
+   in status boolean)
+begin
+
+   if (status) then
+      update Donors set Dcharged_time=now(),Dstatus=1 where pid=ppid;
+      update Projects set Pstatus=1 where pid=ppid;
+   else
+       update Projects set Pstatus=-1 where pid=ppid;
+       update Donors set Dstatus=-1 where pid=ppid;
+   end if;
+end;
+
+drop procedure Check_Campaign
+
+[1:09] 
+DELIMITER $$
+CREATE PROCEDURE Check_Campaign() BEGIN
+ DECLARE done BOOLEAN DEFAULT FALSE;
+ DECLARE _id BIGINT UNSIGNED;
+ DECLARE cur CURSOR FOR SELECT pid FROM Projects;
+ DECLARE CONTINUE HANDLER FOR NOT FOUND SET done := TRUE;
+ OPEN cur;
+ testLoop: LOOP
+   FETCH cur INTO _id;
+   IF done THEN
+     LEAVE testLoop;
+   END IF;
+   if exists(select * from Projects where pid=_id and Pstatus=0 and Pmin_price<=(select sum(Dmoney) from Donors where pid=_id and Dstatus IN(0,1))) then
+            CALL Update_Campaign(_id,TRUE);
+    end if;
+    if exists(select * from Projects where pid=_id and Pstatus=0 and Plast_date<=now()) then
+            CALL Update_Campaign(_id,FALSE);
+    end if;
+   if exists(select * from Projects where pid=_id and Pstatus IN(0,1) and Pmax_price<=(select sum(Dmoney) from Donors where pid=_id and Dstatus IN(0,1))) THEN
+        update Projects set Pstatus=2 where pid=_id;
+   END IF;
+ END LOOP testLoop;
+ CLOSE cur;
+END;
+
+[1:09] 
+drop trigger before_donor_insert
+
+CREATE EVENT campaign_status_check
+ON SCHEDULE EVERY 5 SECOND
+DO
+  CALL Check_Campaign()
+ 
+SET GLOBAL event_scheduler = ON;  
+
+DELIMITER $$
+CREATE TRIGGER before_donor_insert
+   BEFORE INSERT ON Donors
+   FOR EACH ROW
+BEGIN
+    DECLARE msg VARCHAR(255);
+   if exists(select * from Projects where pid=NEW.pid and Pstatus IN(-1,2,3)) THEN
+       set msg = "Projects is closed or Max threshold on funding for this Projects reached";
+       SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg;
+   END IF;
+   if exists(select * from Projects where pid=NEW.pid and Pstatus=1) THEN
+       SET NEW.Dcharged_time=now(),NEW.Dstatus=1;
+   END IF;
+        
+END$$
+DELIMITER
