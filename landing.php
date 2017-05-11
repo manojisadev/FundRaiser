@@ -36,7 +36,7 @@ if(mysqli_connect_error()) {
 $query = "SELECT * FROM Users WHERE Uemail='$username'";
 
 $result = mysqli_query($connection, $query);
-
+echo "<h1> Notification </h1>";
 if(!$result) {
 	echo " <br> Unauthorized user, please Login";
 } else {

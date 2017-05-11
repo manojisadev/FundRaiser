@@ -15,6 +15,7 @@ if(!isset($_SESSION['username']) && isset($_COOKIE['username']) && !empty($_COOK
       <li><a href="project.php">View Projects</a></li>
       <li><a href="createproj.php">New Project</a></li>
       <li><a href="CreditCard.php">Manage Cards</a></li>
+       <li><a href="team.php">Team Management</a></li>
       <?php 
       if( (isset($_COOKIE['username']) && !empty($_COOKIE['username'])) || (isset($_SESSION['username']) ))
         { echo "<li><a href='logout.php'>Logout</a></li>";}

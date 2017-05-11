@@ -69,6 +69,6 @@ $result = mysqli_query($connection, $query);
 	} else {
 		echo "Inserted!";
 	}
-'6'
+
 
 ?>
