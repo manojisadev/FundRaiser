@@ -5,7 +5,7 @@ session_start();
 if(isset($_POST['username'])){
 	$username = $_POST['username'];
 	$_SESSION['username'] = $username;
-	$expire = time() + (60*60*2);
+	$expire = time() + (60*5);
 	setcookie("username",$username,$expire);
 }
 ?>
@@ -49,12 +49,15 @@ if(mysqli_num_rows($result) == 0) {
 	exit;
 	
 } else {
+	$query1 = "UPDATE Users SET Ulast_log = NOW() WHERE Uemail = '$username' AND Upassword = '$password'";
+	$result = mysqli_query($connection,$query1);
+
 	echo $username;
 	echo " Succesfully logged in";
 	header("Location: project.php");
 	 ob_end_flush();
 
-	exit;
+	
 	} 
 
 ?>
