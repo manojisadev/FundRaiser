@@ -1,9 +1,17 @@
 <?php
+$dbhost = "localhost";
+$dbuser = "root";
+$dbpass = "root";
+$dbname = "dbpro1";
+$connection = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
 
 if(isset($_POST['username']) && isset($_POST['comment']) && isset($_POST['pid'])){
-	$username = $_POST['username'];
-	$comment = $_POST['comment'];
-	$pid = $_POST['pid'];
+	$username = mysqli_real_escape_string($connection, $_POST['username']);
+	//$username = $_POST['username'];
+	$comment = mysqli_real_escape_string($connection, $_POST['comment']);
+	//$comment = $_POST['comment'];
+	$pid = mysqli_real_escape_string($connection, $_POST['pid']);
+	//$pid = $_POST['pid'];
 }
 
 ?>

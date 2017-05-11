@@ -1,14 +1,4 @@
-<?php
 
-if(isset($_POST['pid']) && isset($_POST['CNID']) && isset($_POST['uid']) && isset($_POST['Amount'])){
-	$uid = $_POST['uid'];
-	$CNID = $_POST['CNID'];
-	$pid = $_POST['pid'];
-	$Amount = intval($_POST['Amount']);
-	$status = '0';
-}
-
-?>
 <?php 
 $dbhost = "localhost";
 $dbuser = "root";
@@ -22,6 +12,24 @@ if(mysqli_connect_error()) {
 }
 
 ?>
+
+<?php
+
+if(isset($_POST['pid']) && isset($_POST['CNID']) && isset($_POST['uid']) && isset($_POST['Amount'])){
+
+	$uid = mysqli_real_escape_string($connection, $_POST['uid']);
+	//$uid = $_POST['uid'];
+	$CNID = mysqli_real_escape_string($connection, $_POST['CNID']);
+	//$CNID = $_POST['CNID'];
+	$pid = mysqli_real_escape_string($connection, $_POST['pid']);
+	//$pid = $_POST['pid'];
+	$Amount = mysqli_real_escape_string($connection, $_POST['Amount']);
+	//$Amount = intval($_POST['Amount']);
+	$status = '0';
+}
+
+?>
+
 
 
 <?php 

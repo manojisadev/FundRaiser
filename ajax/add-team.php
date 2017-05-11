@@ -1,9 +1,16 @@
 <?php
 session_start();
+$dbhost = "localhost";
+$dbuser = "root";
+$dbpass = "root";
+$dbname = "dbpro1";
+$connection = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
 if( isset($_SESSION['username']) && isset($_POST['email']) && isset($_POST['pid']) ){
 	$username = $_SESSION['username'];
-	$email = $_POST['email'];
-	$pid = $_POST['pid'];
+	$email = mysqli_real_escape_string($connection, $_POST['email']);
+	//$email = $_POST['email'];
+	$pid = mysqli_real_escape_string($connection, $_POST['pid']);
+	//$pid = $_POST['pid'];
 } else {
 	header("Location: login.php");
 	exit;
