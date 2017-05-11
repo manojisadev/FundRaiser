@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(E_ERROR | E_PARSE);
 if(isset($_SESSION['username'])){
 	$username = $_SESSION['username'];
 
@@ -189,8 +190,9 @@ while($row = mysqli_fetch_assoc($result1)) {
 	$email=$row["Uemail"];
 	$cuid=$row["uid"];
 	$comtime=$row["Ccomment_time"];
+	$comment=htmlspecialchars($row["Ccomment"], ENT_QUOTES, 'UTF-8');
 	echo "<a href='userdetail.php?uid=$cuid'>$email</a>:$comtime : ";
-	echo $row["Ccomment"]. "<br>";
+	echo "$comment<br>";
 }
 ?>
 
