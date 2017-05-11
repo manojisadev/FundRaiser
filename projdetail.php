@@ -9,7 +9,8 @@ if(isset($_SESSION['username'])){
 }
 
 if(!empty($_GET['pid']) && isset($_GET['pid'])){
-	$pid = $_GET['pid'];
+	$pid = mysqli_real_escape_string($connection, $_GET['pid']);
+	//$pid = $_GET['pid'];
 }
 
 $dbhost = "localhost";
@@ -26,7 +27,8 @@ if(mysqli_connect_error()) {
 
 $pid = '';
 if(!empty($_GET['pid']) && isset($_GET['pid'])){
-	$pid = $_GET['pid'];
+	$pid = mysqli_real_escape_string($connection, $_GET['pid']);
+	//$pid = $_GET['pid'];
 
 }
 $liked = 'Like';

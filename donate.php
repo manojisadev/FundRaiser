@@ -9,7 +9,8 @@ if(isset($_SESSION['username'])){
 }
 $pid ='';
 if(!empty($_POST['pid']) && isset($_POST['pid'])){
-  $pid = $_POST['pid'];
+  $pid = mysqli_real_escape_string($connection, $_POST['pid']);
+  //$pid = $_POST['pid'];
 }
 
 $dbhost = "localhost";

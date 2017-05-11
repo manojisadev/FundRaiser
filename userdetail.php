@@ -8,8 +8,15 @@ if(isset($_SESSION['username'])){
 	$username = '';
 }
 
+$dbhost = "localhost";
+$dbuser = "root";
+$dbpass = "root";
+$dbname = "dbpro1";
+$connection = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+
 if(!empty($_GET['uid']) && isset($_GET['uid'])){
-	$uid = $_GET['uid'];
+	$uid = mysqli_real_escape_string($connection, $_GET['uid']);
+	//$uid = $_GET['uid'];
 }
 
 $dbhost = "localhost";

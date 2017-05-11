@@ -1,11 +1,22 @@
 <?php
+$dbhost = "localhost";
+$dbuser = "root";
+$dbpass = "root";
+$dbname = "dbpro1";
+$connection = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname); 
 
 if(isset($_POST['CVVNumber']) && isset($_POST['username']) && isset($_POST['OwnerName']) && isset($_POST['CreditNumber']) && isset($_POST['ExpirationDate'])){
-	$username = $_POST['username'];
-	$OwnerName = $_POST['OwnerName'];
-	$CreditNumber = $_POST['CreditNumber'];
-	$CVVNumber = $_POST['CVVNumber'];
-	$ExpirationDate = ($_POST['ExpirationDate']);
+	$username = mysqli_real_escape_string($connection, $_POST['username']);
+	//$username = $_POST['username'];
+	$OwnerName = mysqli_real_escape_string($connection, $_POST['OwnerName']);
+	//$OwnerName = $_POST['OwnerName'];
+	$CreditNumber = mysqli_real_escape_string($connection, $_POST['CreditNumber']);
+	//$CreditNumber = $_POST['CreditNumber'];
+	$CVVNumber = mysqli_real_escape_string($connection, $_POST['CVVNumber']);
+	//$CVVNumber = $_POST['CVVNumber'];
+	$ExpirationDate = mysqli_real_escape_string($connection, $_POST['ExpirationDate']);
+	//$ExpirationDate = ($_POST['ExpirationDate']);
+
 }
 
 ?>

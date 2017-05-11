@@ -5,7 +5,7 @@ Uaddress VARCHAR(45) NULL,
 Uemail VARCHAR(45) NOT NULL UNIQUE,
 Ulast_name VARCHAR(45) NOT NULL,
 Upassword VARCHAR(45) NOT NULL,
-Uphone INT(10) NULL,
+Uphone BIGINT(10) NULL,
 Ujoin_date DATETIME NOT NULL,
 Ulast_log DATETIME NULL,
 PRIMARY KEY (uid)
@@ -13,9 +13,9 @@ PRIMARY KEY (uid)
 
 INSERT INTO Users (uid,Ufirst_name,Ulast_name,Uaddress,Uemail,Upassword,Uphone,Ujoin_date,Ulast_log) VALUES (1,'Adam','Jack','Queens','adam@jack.com','badpassword','1111111111',NOW(),NOW()-0);
 INSERT INTO Users (uid,Ufirst_name,Ulast_name,Uaddress,Uemail,Upassword,Uphone,Ujoin_date,Ulast_log) VALUES (2,'Rock','Dwayne','Brooklyn','rock@dwayne.com','badpassword','222222222',NOW()-10,NOW()-1);
-INSERT INTO Users (uid,Ufirst_name,Ulast_name,Uaddress,Uemail,Upassword,Uphone,Ujoin_date,Ulast_log) VALUES (3,'Ricky','Morty','Bronx','ricky@morty.com','badpassword','333333333',NOW()-20,NOW()-2);
-INSERT INTO Users (uid,Ufirst_name,Ulast_name,Uaddress,Uemail,Upassword,Uphone,Ujoin_date,Ulast_log) VALUES (4,'Hugo','Boss','DC','hugo@boss.com','badpassword','444444444',NOW()-30,NOW()-3);
-INSERT INTO Users (uid,Ufirst_name,Ulast_name,Uaddress,Uemail,Upassword,Uphone,Ujoin_date,Ulast_log) VALUES (5,'Raj','Kath','Cali','raj@kath.com','badpassword','555555555',NOW()-40,NOW()-4);
+INSERT INTO Users (uid,Ufirst_name,Ulast_name,Uaddress,Uemail,Upassword,Uphone,Ujoin_date,Ulast_log) VALUES (3,'Ricky','Morty','Bronx','ricky@morty.com','badpassword','333333333',NOW()-2,NOW()-2);
+INSERT INTO Users (uid,Ufirst_name,Ulast_name,Uaddress,Uemail,Upassword,Uphone,Ujoin_date,Ulast_log) VALUES (4,'Hugo','Boss','DC','hugo@boss.com','badpassword','444444444',NOW()-3,NOW()-3);
+INSERT INTO Users (uid,Ufirst_name,Ulast_name,Uaddress,Uemail,Upassword,Uphone,Ujoin_date,Ulast_log) VALUES (5,'Raj','Kath','Cali','raj@kath.com','badpassword','555555555',NOW()-4,NOW()-1);
 
 
 INSERT INTO Users (uid,Ufirst_name,Ulast_name,Uaddress,Uemail,Upassword,Uphone,Ujoin_date,Ulast_log) VALUES (6,'BobInBrooklyn','Yo','Brooklyn','bobinbrooklyn@yo.com','badpassword','555555555',NOW(),NOW()-5);
@@ -135,7 +135,7 @@ INSERT INTO Likes (pid,uid,Lliked_time) VALUES (33,3,NOW()+3000);
 INSERT INTO Likes (pid,uid,Lliked_time) VALUES (44,4,NOW()+3000);
 INSERT INTO Likes (pid,uid,Lliked_time) VALUES (55,5,NOW()+3000);
 
-
+BIGINT(16)
 CREATE TABLE Resources (
 pid INT NOT NULL,
 uid INT NOT NULL,

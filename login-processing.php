@@ -2,8 +2,14 @@
 ob_start();
 
 session_start();
+$dbhost = "localhost";
+$dbuser = "root";
+$dbpass = "root";
+$dbname = "dbpro1";
+$connection = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+
 if(isset($_POST['username'])){
-	$username = $_POST['username'];
+	$username = mysqli_real_escape_string($connection, $_POST['username']);
 	$_SESSION['username'] = $username;
 	$expire = time() + (60*5);
 	setcookie("username",$username,$expire);
@@ -13,10 +19,10 @@ if(isset($_POST['username'])){
 
 
 <?php
-$username ='';
+
 if(isset($_POST['username'])){
-	$username = $_POST['username'];
-	$password = $_POST['password'];
+	$password = mysqli_real_escape_string($connection, $_POST['password']);
+	//$password = $_POST['password'];
 } else {
 	header("Location: login.php");
 } ?>
