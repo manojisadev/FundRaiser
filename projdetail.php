@@ -139,6 +139,37 @@ if(!$result) {
 			
 		}
 		?>
+<div class="panel-title text-center">
+        <h1 class="title">Resources</h1>
+        <hr/>
+      </div>
+<?php 
+
+$result= mysqli_query($connection, "SELECT * FROM Resources where pid=$pid ORDER BY Rupload_time DESC" ) ;
+print "<div class='container'>\n"; 
+while ($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){ 
+$videos_field= $row['Rcontent'];
+$video_show= "Uploads/videos/$videos_field";
+$descriptionvalue= $row['Rdescription'];
+$fileextensionvalue= $row['extension'];
+$createdon=$row['Rupload_time'];
+print "<div class='row'>\n"; 
+print "<div class='col-sm-6'>\n"; 
+echo "<div align=center><video width='320' controls><source src='$video_show' type='video/$fileextensionvalue'>Your browser does
+not support the video tag.</video></div>";
+print "</div>\n";
+print "<div class='col-sm-3'>\n"; 
+echo "<font face=arial size=4/>Description : $descriptionvalue</font>";
+print "</div>\n";
+print "<div class='col-sm-3'>\n"; 
+echo "<font face=arial size=4/>Created On : $createdon</font>";
+print "</div>\n";
+
+print "</div>\n"; 
+} 
+print "</div>\n";  
+?>
+
 <?php 
 
 $query1 = "Select * FROM Comments AS C INNER JOIN Users AS U ON U.uid = C.uid WHERE C.pid = '$pid'";
@@ -149,7 +180,10 @@ if(!$result1) {
 } 
 
 while($row = mysqli_fetch_assoc($result1)) {
-	echo $row["Uemail"]. "<br>";
+	$email=$row["Uemail"];
+	$cuid=$row["uid"];
+	$comtime=$row["Ccomment_time"];
+	echo "<a href='userdetail.php?uid=$cuid'>$email</a>:$comtime : ";
 	echo $row["Ccomment"]. "<br>";
 }
 ?>
